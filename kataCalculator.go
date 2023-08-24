@@ -23,8 +23,8 @@ var romanNums = map[string]int{
 
 func romanConverter(res int) string {
 	var result string
-	roman := []string{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
-	arabic := []int{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1}
+	roman := []string{"C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"}
+	arabic := []int{100, 90, 50, 40, 10, 9, 5, 4, 1}
 
 	for i := 0; i < len(arabic); i++ {
 		for res >= arabic[i] {
