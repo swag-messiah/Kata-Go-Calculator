@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -42,7 +43,7 @@ func main() {
 	input := strings.Split(scanner.Text(), " ")
 
 	if len(input) != 3 {
-		fmt.Println("Ошибка. Допустимо использование только двух операторов и одного операнда (+, -, *, /).")
+		log.Fatal("Ошибка. Допустимо использование только двух операторов и одного операнда (+, -, *, /).")
 		return
 	}
 
@@ -53,16 +54,21 @@ func main() {
 		if roman, ok := romanNums[input[0]]; ok {
 			num1 = roman //fmt.Println(roman, num1, num2) --Проверка первого римского
 		} else {
-			fmt.Println("Ошибка. Математические операции допустимы только с арабскими или с рискими целыми числами.")
-
+			log.Fatal("Ошибка. Математические операции допустимы только с арабскими или с рискими целыми числами.")
 			return
 		}
 		if roman, ok := romanNums[input[2]]; ok {
 			num2 = roman //fmt.Println(roman, num1, num2) --Проверка второго римского
 		} else {
-			fmt.Println("Ошибка. Математические операции допустимы только с арабскими или с рискими целыми числами.")
+			log.Fatal("Ошибка. Математические операции допустимы только с арабскими или с рискими целыми числами.")
 			return
 		}
+	}
+
+	if num1 > 10 {
+		log.Fatal("Первое вводимое число не может быть больше 10")
+	} else if num2 > 10 {
+		log.Fatal("Второе вводимое число не может быть больше 10")
 	}
 
 	var res int
@@ -70,20 +76,23 @@ func main() {
 	case "+":
 		res = num1 + num2
 	case "-":
-		if num2 >= num1 {
-			fmt.Println("Ошибка. Римская система счисления имеет только натуральные числа.")
-			return
+		if err1 != nil || err2 != nil { //Проверка на римское число перед вычитанием
+			if num2 >= num1 {
+				log.Fatal("Ошибка. Римская система счисления имеет только натуральные числа.")
+				return
+			}
 		}
 		res = num1 - num2
 	case "*":
 		res = num1 * num2
 	case "/":
+		res = num1 / num2
 		if num2 == 0 {
-			fmt.Println("Ошибка. Нельзя делить на ноль.")
+			log.Fatal("Ошибка. Нельзя делить на ноль.")
 			return
 		}
 	default:
-		fmt.Println("Ошибка. Неизвестная операция")
+		log.Fatal("Ошибка. Неизвестная операция")
 		return
 	}
 
